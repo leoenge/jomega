@@ -1,0 +1,59 @@
+Kort förklaring av koden, vad den gör, varför den är där och hur man kan tolka resultaten för att hitta svar till labben. Längst ner i dokumentet finns en sammanställning av alla resultat. Disclaimer: All text följer Björn Önfeldt och V.Korenivskis satta standard att helt skita i enheter och inkluder irrelevanta värdesiffror, enjoy! 
+
+Filer:
+plotta.m (script)
+anpassa.m (script)
+rms_fel.m (function)
+
+De två delarna av labben: dels att plotta datan och dels anpassa en kurva till datan är uppdelade i två separata MatLab-script. Funktionen som beräknar rms-felet har även den, av någon outgrundlig andledning, lagts i en egen funktionsfil.
+
+Kort separt förklaring kring de olika delarna följer nedan.
+
+
+plotta.m:
+Börjar med att plotta funktionen. 
+
+Man ser enkelt att det är ett högpassfilter eftersom transmissionen är hög för höga frekvenser och vice versa.
+
+U_in:
+När transmissionen går mot 1 gäller att U_out = U_in. Transmissionen går mot 1 för stora värden på frekvensen (och U_out). Altså U_in = U_max, vilket vi från grafen ser är ungefär 5.5.
+
+w_cutoff:
+Det gäller att U_cutoff = 1/sqrt(2) * U_max, vilket vi enkelt kan beräkna, U_cutoff = 0.7 * 5.5 = 3.8. Med hjälp av ginput kan man sedan hitta brytfrekvensen i grafen, w_cutoff = 640.
+
+C:
+Till sist gäller att w_cutoff = 1/(RC) => C = 1/(R*w_cutoff) = 1/(10^4 *640) = 1.5 * 10^(-7).
+
+
+
+anpassa.m:
+Vi vill anpassa datan till en kurva på formen U_out(W) = U_in (w*T)/sqrt(1 + (wT)^2) där T och U_in är de två okända konstanterna vi vill bestämma, T=RC är den så kallade tidskonstanten. 
+
+Vi börjar med att använda de ungfärliga värdena från plottningen:
+U_in = 5.5
+RC = 1.5 * 10^(-3)
+plottar och beräkna rms-felet. Ser att plottningen stämmer ganska väl och att rms-felet blir 0.2098.
+
+Går sedan igenom flera värden på både U_in och T och beräkna rms-felet. Sparar allt i en matris och plockar ut de värden som ger minsta rms-felet. De värdena blir 
+U_in = 5.3030
+T = 0.0016
+rms = 0.1494
+plottar man sedan det så ser man att den funktionen är en väldigt fin anpassning till datan.
+
+Till sist kan vi beräkna C om vi vet att R=10. T=RC=0.0016 => C=1.6*10^(-7)
+
+
+Sammanställning av alla resultat
+Titta i graf:
+U_in = 5.5
+w_cutoff = 640
+C = 1.5 * 10^(-7)
+rms = 0.2098
+Anpassa kurva:
+U_in = 5.3030
+C = 1.6 * 10^(-7)
+rms = 0.1494
+
+
+
+

@@ -26,10 +26,16 @@ for U_in = linspace(5.2, 5.8, 100)
 end
 
 [v, i] = min(A(:,3));
-res = A(i,:);
-U_in = res(1)
-T = res(2)
-rms = res(3)
+best_res = A(i,:);
+A(i,:) = [];
+best_U_in = best_res(1)
+best_T = best_res(2)
+best_rms = best_res(3)
+[q, j] = min(A(:,3));
+sec_res = A(j,:);
+sec_U_in = sec_res(1)
+sec_T = sec_res(2)
+sec_rms = sec_res(3)
 
 semilogx(w, U_out(w, U_in, T), 'r')
 
